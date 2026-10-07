@@ -1,0 +1,32 @@
+# Generated from BenchmarkSpecDefinitions.xlsx::Parameters_SmokeBaselineExtend for workload 309.
+# Parameter names come from Parameter_01..Parameter_20. Values come only from Parameters_SmokeBaselineExtend.
+# Do not invent or replace these tokens/numbers. Nested list/map reshaping is allowed
+# when the runner needs structured sweeps; keep the same tokens and numbers.
+# Command columns on Workload_Definitions are generated display. Sweep/list flags in those
+# commands are documentary; omit them so yaml expands cases.
+# sweep.profile is baseline for LLM Serving and smoke otherwise.
+# Add thresholds: or baselines: from hardware_profile.mi300x.yaml and Workload Type.
+sweep:
+  profile: smoke
+  num_numa_nodes: 1
+  num_threads:
+    smoke: 1
+    baseline: 4
+    extended: 4
+  thread_affinity: 0-3
+  page_size: 4KB
+  working_set_size:
+    smoke: l1=16384,l2=262144,l3=2097152,local_dram=16777216,remote_dram=16777216
+    baseline: l1=32768,l2=262144,l3=8388608,local_dram=268435456,remote_dram=268435456
+    extended: l1=32768,l2=262144,l3=8388608,local_dram=268435456,remote_dram=268435456
+  stride: 64
+  access_pattern: random
+  prefetch_enabled: false
+  warmup_iters:
+    smoke: 10000
+    baseline: 1000000
+    extended: 1000000
+  num_iterations:
+    smoke: 200000
+    baseline: 2900000000
+    extended: 8800000000
