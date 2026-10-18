@@ -36,7 +36,7 @@ sample_index,status,tier,latency_ns,working_set_size,stride,thread_count,error_m
 - **#2: Pointer-chase latency for the L2-cache tier** — stored as `latency_ns_l2`.
 - **#3: Pointer-chase latency for the L3-cache tier** — stored as `latency_ns_l3`.
 - **#4: Local DRAM latency, ns** — stored as `latency_ns_local_dram`.
-- **#5: Remote DRAM latency, ns** — stored as `latency_ns_remote_dram`.
+- **#5: Remote DRAM latency, ns, na on a host with fewer than two NUMA nodes** — stored as `latency_ns_remote_dram`.
 
 ## Framework
 

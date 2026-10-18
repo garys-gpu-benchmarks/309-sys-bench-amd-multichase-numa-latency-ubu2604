@@ -37,7 +37,7 @@
   {
     "field_name": "Metrics",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
-    "value": "#1: Pointer-chase latency for the L1-cache tier (latency_ns_l1); #2: Pointer-chase latency for the L2-cache tier (latency_ns_l2); #3: Pointer-chase latency for the L3-cache tier (latency_ns_l3); #4: Local DRAM latency, ns (latency_ns_local_dram); #5: Remote DRAM latency, ns (latency_ns_remote_dram)"
+    "value": "#1: Pointer-chase latency for the L1-cache tier (latency_ns_l1); #2: Pointer-chase latency for the L2-cache tier (latency_ns_l2); #3: Pointer-chase latency for the L3-cache tier (latency_ns_l3); #4: Local DRAM latency, ns (latency_ns_local_dram); #5: Remote DRAM latency, ns, na on a host with fewer than two NUMA nodes (latency_ns_remote_dram)"
   },
   {
     "field_name": "Command Tools Executed",
@@ -162,7 +162,7 @@
   {
     "field_name": "Python Version",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
-    "value": "Python 3.14.N (uv-managed; all benchmark venvs; same build as 24.04). System python3.14 retained for OS and setup scripts only"
+    "value": "Python 3.14.8 (uv-managed CPython from `uv python install 3.14`; all benchmark venvs; same build as 24.04). System Python 3.14.4 retained for OS and setup scripts only"
   },
   {
     "field_name": "GPU Runtime Version (was ROCm Version)",
@@ -362,7 +362,7 @@
   {
     "field_name": "Schema Last Updated",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
-    "value": "2026-09-05"
+    "value": "2026-10-17"
   },
   {
     "field_name": "Installation and Execution Summary",
