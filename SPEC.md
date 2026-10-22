@@ -10,7 +10,7 @@
 | num_threads | `--num-threads` | smoke=1, baseline=4, extended=4 | 4 | From Parameter list; see Execution Description With Parameters. |
 | thread_affinity | `--thread-affinity` | smoke=0-3, baseline=0-3, extended=0-3 | 0-3 | From Parameter list; see Execution Description With Parameters. |
 | page_size | `--page-size` | smoke=4KB, baseline=4KB, extended=4KB | 4KB | From Parameter list; see Execution Description With Parameters. |
-| working_set_size | `--working-set-size` | smoke=l1=16384,l2=262144,l3=2097152,local_dram=16777216,remote_dram=16777216, baseline=l1=32768,l2=262144,l3=8388608,local_dram=1073741824,remote_dram=1073741824, extended=l1=32768,l2=262144,l3=8388608,local_dram=1073741824,remote_dram=1073741824 | l1=32768,l2=262144,l3=8388608,local_dram=1073741824,remote_dram=1073741824 | From Parameter list; see Execution Description With Parameters. |
+| working_set_size | `--working-set-size` | smoke=l1=16384,l2=262144,l3=2097152,local_dram=268435456,remote_dram=268435456, baseline=l1=32768,l2=262144,l3=8388608,local_dram=1073741824,remote_dram=1073741824, extended=l1=32768,l2=262144,l3=8388608,local_dram=1073741824,remote_dram=1073741824 | l1=32768,l2=262144,l3=8388608,local_dram=1073741824,remote_dram=1073741824 | From Parameter list; see Execution Description With Parameters. |
 | stride | `--stride` | smoke=64, baseline=64, extended=64 | 64 | From Parameter list; see Execution Description With Parameters. |
 | access_pattern | `--access-pattern` | smoke=random, baseline=random, extended=random | random | From Parameter list; see Execution Description With Parameters. |
 | prefetch_enabled | `--prefetch-enabled` | smoke=false, baseline=false, extended=false | false | From Parameter list; see Execution Description With Parameters. |
