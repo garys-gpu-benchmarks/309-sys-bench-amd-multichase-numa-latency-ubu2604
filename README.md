@@ -85,7 +85,7 @@ Three operator scripts from [`garys-gpu-benchmarks/gpu-bench-suite`](https://git
 
 ## 1. Overview
 
-Compiles src/multichase.c and runs one pointer-chase per yaml working_set_size tier under numactl via scripts/collect_multichase.py. working_set_size expands from yaml. stride, warmup_iters, and num_iterations use collect_multichase.py defaults (64, 10000, 200000) because collect_workload.py does not forward yaml or run_benchmark values. remote_dram runs with --cpunodebind=0 --membind=1 when numactl --hardware reports two or more NUMA nodes; on a single-node host it is reported as not measured. Sweep dimensions: num_numa_nodes, num_threads, thread_affinity, page_size, working_set_size, stride, access_pattern, prefetch_enabled.
+Compiles src/multichase.c and runs one pointer-chase per yaml working_set_size tier under numactl via scripts/collect_multichase.py. working_set_size expands from yaml. stride, warmup_iters, and num_iterations use collect_multichase.py defaults (64, 10000, 200000) because collect_workload.py does not forward yaml or run_benchmark values. remote_dram runs with --cpunodebind=0 --membind=1 when numactl --hardware reports two or more NUMA nodes; on a single-node host it is reported as not measured. Sweep dimensions: num_numa_nodes, working_set_size, stride, warmup_iters, num_iterations, num_threads, thread_affinity.
 
 ## 2. What It Validates
 

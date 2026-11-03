@@ -46,15 +46,12 @@ Validation and logging:
 
 Workload options:
   --num-numa-nodes <value>            Override num_numa_nodes
-  --num-threads <value>            Override num_threads
-  --thread-affinity <value>            Override thread_affinity
-  --page-size <value>            Override page_size
   --working-set-size <value>            Override working_set_size
   --stride <value>            Override stride
-  --access-pattern <value>            Override access_pattern
-  --prefetch-enabled <value>            Override prefetch_enabled
   --warmup-iters <value>            Override warmup_iters
   --num-iterations <value>            Override num_iterations
+  --num-threads <value>            Override num_threads
+  --thread-affinity <value>            Override thread_affinity
 
 Information:
   --specification               Print this workload's specification and exit
@@ -89,15 +86,12 @@ LOG_LEVEL_VALUE="INFO"
 OUTPUT_FORMAT=""
 SAVE_OPTIONS_FILE=""
 NUM_NUMA_NODES=""
-NUM_THREADS=""
-THREAD_AFFINITY=""
-PAGE_SIZE=""
 WORKING_SET_SIZE=""
 STRIDE=""
-ACCESS_PATTERN=""
-PREFETCH_ENABLED=""
 WARMUP_ITERS=""
 NUM_ITERATIONS=""
+NUM_THREADS=""
+THREAD_AFFINITY=""
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -119,15 +113,12 @@ while [[ $# -gt 0 ]]; do
     --output-format) OUTPUT_FORMAT="${2:-}"; shift 2 ;;
     --save-options-file) SAVE_OPTIONS_FILE="${2:-}"; shift 2 ;;
     --num-numa-nodes) NUM_NUMA_NODES="${2:-}"; shift 2 ;;
-    --num-threads) NUM_THREADS="${2:-}"; shift 2 ;;
-    --thread-affinity) THREAD_AFFINITY="${2:-}"; shift 2 ;;
-    --page-size) PAGE_SIZE="${2:-}"; shift 2 ;;
     --working-set-size) WORKING_SET_SIZE="${2:-}"; shift 2 ;;
     --stride) STRIDE="${2:-}"; shift 2 ;;
-    --access-pattern) ACCESS_PATTERN="${2:-}"; shift 2 ;;
-    --prefetch-enabled) PREFETCH_ENABLED="${2:-}"; shift 2 ;;
     --warmup-iters) WARMUP_ITERS="${2:-}"; shift 2 ;;
     --num-iterations) NUM_ITERATIONS="${2:-}"; shift 2 ;;
+    --num-threads) NUM_THREADS="${2:-}"; shift 2 ;;
+    --thread-affinity) THREAD_AFFINITY="${2:-}"; shift 2 ;;
     --help|--specification|--matrix-definition) shift ;;
     *) die "Unknown option: $1" ;;
   esac
@@ -167,30 +158,24 @@ PY
 }
 
 NUM_NUMA_NODES="${NUM_NUMA_NODES:-$(yaml_get num_numa_nodes)}"
-NUM_THREADS="${NUM_THREADS:-$(yaml_get num_threads)}"
-THREAD_AFFINITY="${THREAD_AFFINITY:-$(yaml_get thread_affinity)}"
-PAGE_SIZE="${PAGE_SIZE:-$(yaml_get page_size)}"
 WORKING_SET_SIZE="${WORKING_SET_SIZE:-$(yaml_get working_set_size)}"
 STRIDE="${STRIDE:-$(yaml_get stride)}"
-ACCESS_PATTERN="${ACCESS_PATTERN:-$(yaml_get access_pattern)}"
-PREFETCH_ENABLED="${PREFETCH_ENABLED:-$(yaml_get prefetch_enabled)}"
 WARMUP_ITERS="${WARMUP_ITERS:-$(yaml_get warmup_iters)}"
 NUM_ITERATIONS="${NUM_ITERATIONS:-$(yaml_get num_iterations)}"
+NUM_THREADS="${NUM_THREADS:-$(yaml_get num_threads)}"
+THREAD_AFFINITY="${THREAD_AFFINITY:-$(yaml_get thread_affinity)}"
 OUTPUT_FORMAT="${OUTPUT_FORMAT:-$(yaml_get output_format)}"
 OUTPUT_FORMAT="${OUTPUT_FORMAT:-csv}"
 
 BENCHMARK_RUN_COMMAND="bash run_benchmark.sh --${PROFILE}"
 [[ "${VALIDATE}" -eq 1 ]] && BENCHMARK_RUN_COMMAND+=" --validate"
 [[ -n "${NUM_NUMA_NODES}" ]] && BENCHMARK_RUN_COMMAND+=" --num-numa-nodes $(printf %q "${NUM_NUMA_NODES}")"
-[[ -n "${NUM_THREADS}" ]] && BENCHMARK_RUN_COMMAND+=" --num-threads $(printf %q "${NUM_THREADS}")"
-[[ -n "${THREAD_AFFINITY}" ]] && BENCHMARK_RUN_COMMAND+=" --thread-affinity $(printf %q "${THREAD_AFFINITY}")"
-[[ -n "${PAGE_SIZE}" ]] && BENCHMARK_RUN_COMMAND+=" --page-size $(printf %q "${PAGE_SIZE}")"
 [[ -n "${WORKING_SET_SIZE}" ]] && BENCHMARK_RUN_COMMAND+=" --working-set-size $(printf %q "${WORKING_SET_SIZE}")"
 [[ -n "${STRIDE}" ]] && BENCHMARK_RUN_COMMAND+=" --stride $(printf %q "${STRIDE}")"
-[[ -n "${ACCESS_PATTERN}" ]] && BENCHMARK_RUN_COMMAND+=" --access-pattern $(printf %q "${ACCESS_PATTERN}")"
-[[ -n "${PREFETCH_ENABLED}" ]] && BENCHMARK_RUN_COMMAND+=" --prefetch-enabled $(printf %q "${PREFETCH_ENABLED}")"
 [[ -n "${WARMUP_ITERS}" ]] && BENCHMARK_RUN_COMMAND+=" --warmup-iters $(printf %q "${WARMUP_ITERS}")"
 [[ -n "${NUM_ITERATIONS}" ]] && BENCHMARK_RUN_COMMAND+=" --num-iterations $(printf %q "${NUM_ITERATIONS}")"
+[[ -n "${NUM_THREADS}" ]] && BENCHMARK_RUN_COMMAND+=" --num-threads $(printf %q "${NUM_THREADS}")"
+[[ -n "${THREAD_AFFINITY}" ]] && BENCHMARK_RUN_COMMAND+=" --thread-affinity $(printf %q "${THREAD_AFFINITY}")"
 set_benchmark_run_command "${BENCHMARK_RUN_COMMAND}"
 
 HOSTNAME_VALUE="$(hostname -s 2>/dev/null || hostname)"
@@ -234,15 +219,12 @@ run_collection() {
   fi
   grep -q -- '--output-format' <<<"${help}" && collect_args+=(--output-format "${OUTPUT_FORMAT}")
   grep -q -- '--num-numa-nodes' <<<"${help}" && collect_args+=(--num-numa-nodes "${NUM_NUMA_NODES}")
-  grep -q -- '--num-threads' <<<"${help}" && collect_args+=(--num-threads "${NUM_THREADS}")
-  grep -q -- '--thread-affinity' <<<"${help}" && collect_args+=(--thread-affinity "${THREAD_AFFINITY}")
-  grep -q -- '--page-size' <<<"${help}" && collect_args+=(--page-size "${PAGE_SIZE}")
   grep -q -- '--working-set-size' <<<"${help}" && collect_args+=(--working-set-size "${WORKING_SET_SIZE}")
   grep -q -- '--stride' <<<"${help}" && collect_args+=(--stride "${STRIDE}")
-  grep -q -- '--access-pattern' <<<"${help}" && collect_args+=(--access-pattern "${ACCESS_PATTERN}")
-  grep -q -- '--prefetch-enabled' <<<"${help}" && collect_args+=(--prefetch-enabled "${PREFETCH_ENABLED}")
   grep -q -- '--warmup-iters' <<<"${help}" && collect_args+=(--warmup-iters "${WARMUP_ITERS}")
   grep -q -- '--num-iterations' <<<"${help}" && collect_args+=(--num-iterations "${NUM_ITERATIONS}")
+  grep -q -- '--num-threads' <<<"${help}" && collect_args+=(--num-threads "${NUM_THREADS}")
+  grep -q -- '--thread-affinity' <<<"${help}" && collect_args+=(--thread-affinity "${THREAD_AFFINITY}")
 
   printf -v collect_cmd '%q ' "${PYTHON_BIN}" scripts/collect_workload.py "${collect_args[@]}"
   echo "[RUN] ${collect_cmd}"
