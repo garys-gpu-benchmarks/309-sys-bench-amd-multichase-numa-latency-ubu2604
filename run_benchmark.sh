@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # File: run_benchmark.sh
 # Description: Compiles src/multichase.
-# Execution: bash run_benchmark.sh [--smoke|--baseline|--extended] [--validate]
-# Options: --smoke, --baseline, --extended, --config, --validate, --help
+# Execution: bash run_benchmark.sh [--smoke|--baseline|--extended]
+# Options: --smoke, --baseline, --extended, --config, --help
 # Requirements: bash, python3, repository-local .venv
 # Dependencies: common.sh, collect_workload.py
 # License: Apache-2.0
@@ -20,21 +20,12 @@ Usage: bash run_benchmark.sh [OPTIONS]
 
 Compiles src/multichase.
 
-Profiles:
+Profiles (default: --smoke):
   --smoke                       Run smoke profile
   --baseline                    Run baseline profile
   --extended                    Run extended profile
 
-Execution:
-  --config <file>               Config file (default: config/benchmark_config.yaml)
-
-Validation and logging:
-  --validate                    Enable result validation (default)
-  --no-validate                 Skip result validation
-  --quiet                       Suppress nonessential stdout
-  --log-level <level>           ERROR|WARN|INFO|DEBUG (default: INFO)
-
-Workload options:
+Parameters (override the profile's value):
   --num-numa-nodes <value>      Shared workload parameter (smoke/baseline/extended: 1)
   --working-set-size <value>    Memory region size used by the workload (smoke l1=16384,l2=262144,l3=2097152,local_dram=268435456,remote_dram=268435456, baseline l1=32768,l2=262144,l3=8388608,local_dram=1073741824,remote_dram=1073741824, extended l1=32768,l2=262144,l3=8388608,local_dram=1073741824,remote_dram=1073741824)
   --stride <n>                  Distance between successive memory accesses (smoke/baseline/extended: 64)
@@ -43,14 +34,18 @@ Workload options:
   --num-threads <n>             Execution threads issuing work (smoke 1, baseline 4, extended 4)
   --thread-affinity <value>     Policy or CPU/NUMA placement for execution threads (smoke/baseline/extended: 0-3)
 
-Information:
+General options:
+  --config <file>               Config file (default: config/benchmark_config.yaml)
+  --quiet                       Suppress nonessential stdout
+  --log-level <level>           ERROR|WARN|INFO|DEBUG (default: INFO)
   --specification               Print this workload's specification and exit
   --help                        Show this help and exit
 
 Examples:
-  bash run_benchmark.sh --smoke --validate
-  bash run_benchmark.sh --baseline --validate
-  bash run_benchmark.sh --extended --validate
+  bash run_benchmark.sh --smoke
+  bash run_benchmark.sh --baseline
+  bash run_benchmark.sh --extended
+  bash run_benchmark.sh --baseline --num-threads 2
 USAGE
 }
 
@@ -66,7 +61,6 @@ done
 
 PROFILE="smoke"
 CONFIG_FILE="config/benchmark_config.yaml"
-VALIDATE=1
 QUIET=0
 LOG_LEVEL_VALUE="INFO"
 NUM_NUMA_NODES=""
@@ -83,8 +77,7 @@ while [[ $# -gt 0 ]]; do
     --baseline) PROFILE="baseline"; shift ;;
     --extended) PROFILE="extended"; shift ;;
     --config) CONFIG_FILE="${2:-}"; shift 2 ;;
-    --validate) VALIDATE=1; shift ;;
-    --no-validate) VALIDATE=0; shift ;;
+    --validate) shift ;;  # ignored; result validation always runs
     --quiet) QUIET=1; shift ;;
     --log-level) LOG_LEVEL_VALUE="${2:-}"; shift 2 ;;
     --num-numa-nodes) NUM_NUMA_NODES="${2:-}"; shift 2 ;;
@@ -136,7 +129,6 @@ OUTPUT_FORMAT="$(yaml_get output_format)"
 OUTPUT_FORMAT="${OUTPUT_FORMAT:-csv}"
 
 BENCHMARK_RUN_COMMAND="bash run_benchmark.sh --${PROFILE}"
-[[ "${VALIDATE}" -eq 1 ]] && BENCHMARK_RUN_COMMAND+=" --validate"
 [[ -n "${NUM_NUMA_NODES}" ]] && BENCHMARK_RUN_COMMAND+=" --num-numa-nodes $(printf %q "${NUM_NUMA_NODES}")"
 [[ -n "${WORKING_SET_SIZE}" ]] && BENCHMARK_RUN_COMMAND+=" --working-set-size $(printf %q "${WORKING_SET_SIZE}")"
 [[ -n "${STRIDE}" ]] && BENCHMARK_RUN_COMMAND+=" --stride $(printf %q "${STRIDE}")"
@@ -210,7 +202,7 @@ run_validate() {
 
 run_collection
 run_parse
-[[ "${VALIDATE}" -eq 1 ]] && run_validate
+run_validate
 record_benchmark_stop
 capture_journal_warnings "${RUN_DIR}" "${BENCHMARK_START_DATETIME}" "${STOP_TIME}"
 bash scripts/collect_hw_sw_info.sh "${RUN_DIR}"
