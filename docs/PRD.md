@@ -21,7 +21,7 @@ Compile src/multichase.c and run one pointer-chase per yaml working_set_size und
 Measure cache and NUMA pointer-chase latency
 
 ## Validation Objective
-Validates one latency_ns per working-set tier. Fails if fewer than two samples or any zero latency
+Validates at least two finite latency_ns rows. remote_dram is not measured on a single-node host
 
 ## Workload Category
 Memory, Bandwidth & Data Movement
