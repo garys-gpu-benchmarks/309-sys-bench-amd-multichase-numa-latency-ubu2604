@@ -31,12 +31,23 @@ Profiles (default: --smoke):
 
 Parameters (override the profile's value):
   --num-numa-nodes <value>      Shared workload parameter (smoke/baseline/extended: 1)
-  --working-set-size <value>    Memory region size used by the workload (smoke l1=16384,l2=262144,l3=2097152,local_dram=268435456,remote_dram=268435456, baseline l1=32768,l2=262144,l3=8388608,local_dram=1073741824,remote_dram=1073741824, extended l1=32768,l2=262144,l3=8388608,local_dram=1073741824,remote_dram=1073741824)
-  --stride <n>                  Distance between successive memory accesses (smoke/baseline/extended: 64)
-  --warmup-iters <n>            Untimed warm-up repetitions before measurement (smoke 10000, baseline 1000000, extended 1000000)
-  --num-iterations <n>          Number of timed repetitions (smoke 200000, baseline 1500000000, extended 4500000000)
+  --working-set-size <value>    Memory region size used by the workload
+                                  smoke:             l1=16384,l2=262144,l3=2097152,
+                                                     local_dram=268435456,remote_dram=268435456
+                                  baseline/extended: l1=32768,l2=262144,l3=8388608,
+                                                     local_dram=1073741824,remote_dram=1073741824
+  --stride <n>                  Distance between successive memory accesses
+                                  all profiles: 64
+  --warmup-iters <n>            Untimed warm-up repetitions before measurement
+                                  smoke:             10000
+                                  baseline/extended: 1000000
+  --num-iterations <n>          Number of timed repetitions
+                                  smoke:    200000
+                                  baseline: 1500000000
+                                  extended: 4500000000
   --num-threads <n>             Execution threads issuing work (smoke 1, baseline 4, extended 4)
-  --thread-affinity <value>     Policy or CPU/NUMA placement for execution threads (smoke/baseline/extended: 0-3)
+  --thread-affinity <value>     Policy or CPU/NUMA placement for execution threads
+                                  all profiles: 0-3
 
 General options:
   --config <file>               Config file (default: config/benchmark_config.yaml)
