@@ -16,12 +16,11 @@ capture_benchmark_run_command_submitted "$@"
 
 usage() {
   cat <<'USAGE'
+
 Usage: bash run_benchmark.sh [OPTIONS]
 
 Workload Name:          multichase Pointer-Chase.
 Main Goal:              Measure cache and NUMA pointer-chase latency.
-Validation Objective:   Validates at least two finite latency_ns rows. remote_dram is not measured
-                        on a single-node host.
 Command Tools Executed: Compile src/multichase.c; run build/multichase under numactl via
                         scripts/collect_multichase.py.
 

@@ -35,6 +35,11 @@
     "value": "Measure cache and NUMA pointer-chase latency"
   },
   {
+    "field_name": "Command Tools Executed",
+    "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
+    "value": "Compile src/multichase.c; run build/multichase under numactl via scripts/collect_multichase.py"
+  },
+  {
     "field_name": "Metrics",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
     "value": "#1: Pointer-chase latency for the L1-cache tier (latency_ns_l1); #2: Pointer-chase latency for the L2-cache tier (latency_ns_l2); #3: Pointer-chase latency for the L3-cache tier (latency_ns_l3); #4: Local DRAM latency, ns (latency_ns_local_dram); #5: Remote DRAM latency, ns, na on a host with fewer than two NUMA nodes (latency_ns_remote_dram)"
@@ -140,16 +145,6 @@
     "value": "-"
   },
   {
-    "field_name": "Validation Objective",
-    "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
-    "value": "Validates at least two finite latency_ns rows. remote_dram is not measured on a single-node host"
-  },
-  {
-    "field_name": "Command Tools Executed",
-    "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
-    "value": "Compile src/multichase.c; run build/multichase under numactl via scripts/collect_multichase.py"
-  },
-  {
     "field_name": "run_benchmark Command Plus Options for Smoke Run (One minute or less)",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
     "value": "bash run_benchmark.sh --smoke --validate --num-numa-nodes 1 --working-set-size l1=16384,l2=262144,l3=2097152,local_dram=268435456,remote_dram=268435456 --stride 64 --warmup-iters 10000 --num-iterations 200000 --num-threads 1 --thread-affinity 0-3"
@@ -163,6 +158,11 @@
     "field_name": "run_benchmark Command Plus Options for Extended Run (8 to 15 minutes)",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
     "value": "bash run_benchmark.sh --extended --validate --num-numa-nodes 1 --working-set-size l1=32768,l2=262144,l3=8388608,local_dram=1073741824,remote_dram=1073741824 --stride 64 --warmup-iters 1000000 --num-iterations 4500000000 --num-threads 4 --thread-affinity 0-3"
+  },
+  {
+    "field_name": "Validation Objective",
+    "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
+    "value": "Validates at least two finite latency_ns rows. remote_dram is not measured on a single-node host"
   },
   {
     "field_name": "Command Execution Details and Purpose",
