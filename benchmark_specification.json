@@ -205,14 +205,14 @@
     "value": "MI300X"
   },
   {
-    "field_name": "Raw Output Format",
-    "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
-    "value": "CSV with one row per cache or DRAM tier"
-  },
-  {
     "field_name": "Primary Record Granularity",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
     "value": "one CSV row per working-set tier"
+  },
+  {
+    "field_name": "Raw Output Format",
+    "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
+    "value": "CSV with one row per cache or DRAM tier"
   },
   {
     "field_name": "Raw Output Example",
@@ -225,14 +225,14 @@
     "value": "tier, latency_ns, working_set_size, stride, thread_count. Summary keys are latency_ns_l1, latency_ns_l2, latency_ns_l3, latency_ns_local_dram, latency_ns_remote_dram"
   },
   {
-    "field_name": "Success Criteria",
-    "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
-    "value": "at least two finite non-zero latency rows and validation gates pass"
-  },
-  {
     "field_name": "Parser and Normalization Notes",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
     "value": "parse_results.py pivots the tier column: each yaml tier (l1, l2, l3, local_dram, remote_dram) gets its own latency_ns_<tier> aggregate in results/summary.json; the blended overall latency_ns mean (which mixed unrelated tiers into one meaningless number) is dropped once pivoting applies. On a single-NUMA-node host latency_ns_remote_dram is reported as not measured. Smoke caps warmup and iteration counts"
+  },
+  {
+    "field_name": "Success Criteria",
+    "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
+    "value": "at least two finite non-zero latency rows and validation gates pass"
   },
   {
     "field_name": "Hardware Config",
