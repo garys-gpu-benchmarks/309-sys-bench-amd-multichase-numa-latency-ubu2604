@@ -40,6 +40,11 @@
     "value": "Compile src/multichase.c; run build/multichase under numactl via scripts/collect_multichase.py"
   },
   {
+    "field_name": "Execution Description With Parameters",
+    "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
+    "value": "Compiles src/multichase.c and runs one pointer-chase per yaml working_set_size tier under numactl via scripts/collect_multichase.py. working_set_size expands from yaml. stride, warmup_iters, and num_iterations use collect_multichase.py defaults (64, 10000, 200000) because collect_workload.py does not forward yaml or run_benchmark values. remote_dram runs with --cpunodebind=0 --membind=1 when numactl --hardware reports two or more NUMA nodes; on a single-node host it is reported as not measured. num_threads, access_pattern, prefetch_enabled, page_size, and thread_affinity are metadata only. output_format: csv"
+  },
+  {
     "field_name": "Metrics",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
     "value": "#1: Pointer-chase latency for the L1-cache tier (latency_ns_l1); #2: Pointer-chase latency for the L2-cache tier (latency_ns_l2); #3: Pointer-chase latency for the L3-cache tier (latency_ns_l3); #4: Local DRAM latency, ns (latency_ns_local_dram); #5: Remote DRAM latency, ns, na on a host with fewer than two NUMA nodes (latency_ns_remote_dram)"
@@ -173,11 +178,6 @@
     "field_name": "Command Methodology",
     "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
     "value": "Compile multichase with gcc -O2 and run one chase per yaml working_set_size tier under numactl --cpunodebind=0 and --membind=0 (remote_dram uses --membind=1 when numactl reports two or more NUMA nodes; otherwise it is reported as not measured), using defaults stride=64, warmup=10000, iters=200000, then parse latency_ns. Yaml stride, warmup_iters, and num_iterations are not applied on the normal run_benchmark path"
-  },
-  {
-    "field_name": "Execution Description With Parameters",
-    "source_file": "BenchmarkSpecDefinitions.xlsx::Workload_Definitions",
-    "value": "Compiles src/multichase.c and runs one pointer-chase per yaml working_set_size tier under numactl via scripts/collect_multichase.py. working_set_size expands from yaml. stride, warmup_iters, and num_iterations use collect_multichase.py defaults (64, 10000, 200000) because collect_workload.py does not forward yaml or run_benchmark values. remote_dram runs with --cpunodebind=0 --membind=1 when numactl --hardware reports two or more NUMA nodes; on a single-node host it is reported as not measured. num_threads, access_pattern, prefetch_enabled, page_size, and thread_affinity are metadata only. output_format: csv"
   },
   {
     "field_name": "Execution Domain",
